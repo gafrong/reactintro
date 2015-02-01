@@ -11,28 +11,38 @@
 <script type="text/jsx">
   /*** @jsx React.DOM */
   var APP = React.createClass({
-    getDefaultProps:function(){
-      return {
-        txt:'This is the default',
-        cat:0
-      }
+    getInitialState:function(){
+      return {txt:'',id:0}
     },
-    propTypes:{
-      txt:React.PropTypes.string,
-      cat:React.PropTypes.number.isRequired
+    updateTxt:function(e){
+      this.setState({txt:e.target.value})
     },
     render:function(){
       console.log(this.props.txt)
       return (
         <div>
-          <h1>{this.props.txt}</h1>
-          <b>bold</b>
+          <Widget txt={this.state.txt} update={this.updateTxt} />
+          <Widget txt={this.state.txt} update={this.updateTxt} />
+          <Widget txt={this.state.txt} update={this.updateTxt} />
         </div>
         )
     }
   });
 
-  React.renderComponent(<APP cat={5} />,document.body)
+  var Widget = React.createClass({
+    render:function(){
+      return (
+        <div>
+          <input type="text" onChange={this.props.update} />
+          <h1>{this.props.txt}</h1>
+        </div>
+        )
+    }
+  })
+
+  React.renderComponent(
+    <APP />,
+    document.body)
 </script>
 </body>
 </html>
